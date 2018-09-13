@@ -1,18 +1,19 @@
-# xunsearch-dev docker
-# created by hightman.20150826
+# xunsearch-arm64v8 docker
+# created by goldenwind.20180913
 #
 # START COMMAND:
-
 # docker run -d --name xunsearch -p 8383:8383 -p 8384:8384 \
 # -v /var/xunsearch/data:/usr/local/xunsearch/data hightman/xunsearch:latest
 #
-FROM ubuntu:14.04
+FROM arm64v8/ubuntu:14.04
 MAINTAINER hightman, hightman@twomice.net
 
 # Install required packages
 RUN apt-get update -qq
 RUN apt-get install -qy --no-install-recommends \
 	wget make gcc g++ bzip2 zlib1g-dev 
+# install libuuid
+RUN apt-get install uuid-dev
 
 # Download & Install xunsearch-dev
 RUN cd /root && wget -qO - http://www.xunsearch.com/download/xunsearch-full-dev.tar.bz2 | tar xj
@@ -38,4 +39,3 @@ RUN echo "#!/bin/sh" > bin/xs-docker.sh \
 
 ENTRYPOINT ["sh"]
 CMD ["bin/xs-docker.sh"]
-
